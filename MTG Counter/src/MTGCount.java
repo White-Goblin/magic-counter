@@ -14,4 +14,5 @@ public class MTGCount {
 		Gui gui = new Gui();
 		gui.build();
 	}
+	
 }
