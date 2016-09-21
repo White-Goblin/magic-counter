@@ -7,7 +7,7 @@ public class Player {
 	private boolean alive = true;
 	private String name = "";
 	
-	ArrayList<Player> p = new ArrayList();
+	static ArrayList<Player> p = new ArrayList<Player> ();
 	
 	public int getHp() {
 		return hp;
