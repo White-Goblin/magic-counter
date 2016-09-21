@@ -1,13 +1,26 @@
 import java.util.ArrayList;
 
 public class Player {
+	
+	static ArrayList<Player> pArray = new ArrayList<Player> ();
 
 	private int hp = 20;
 	private boolean active = false;
 	private boolean alive = true;
 	private String name = "";
 	
-	static ArrayList<Player> p = new ArrayList<Player> ();
+	public void buildPlayerArray (int i) {
+		if (i<Player.pArray.size()) {
+			while (i<Player.pArray.size()) {
+				Player.pArray.remove(i);
+			}
+		}
+		if (i>Player.pArray.size()) {
+			while (i>Player.pArray.size()) {
+				Player.pArray.add(new Player());
+			}
+		}
+	}
 	
 	public int getHp() {
 		return hp;
