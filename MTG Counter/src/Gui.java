@@ -3,21 +3,49 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Gui {
-	
-	String[] labels = {"1","2","3","4","5","6","7","8"};
+	////variables////
+	String[] comboLabels = {"1","2","3","4","5","6","7","8"};
+	String[] buttonLabels = {"+5","+1","-1","-5"};
 	
 	JFrame frame = new JFrame("MTG Counter");
-	JPanel leftPanel = new JPanel();
-	JComboBox playerNumber= new JComboBox(labels);
+	JPanel leftPanel = new JPanel(new GridBagLayout());
+	JPanel topPanel = new JPanel(new GridBagLayout());
+	GridBagConstraints gcLeft = new GridBagConstraints();
+	GridBagConstraints gcTop = new GridBagConstraints();
+	JComboBox playerNumber= new JComboBox(comboLabels);
 	JRadioButton radioButton;
-	JButton button = new JButton("BUTTAN");
-	GridBagLayout gc = new GridBagLayout();
+	JButton button;
+	JLabel label;
 	
 	public void build() {
 		System.out.println("building");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		leftPanel.add(button, gc);
+		
+		////left panel building////
+		for (int i=0; i<4; i++) {
+			JButton button = new JButton(buttonLabels[i]);
+			gcLeft.gridy = i;
+			leftPanel.add(button, gcLeft);
+		}
+		
+		for (int i=0; i<8; i++) {
+			gcLeft.gridy = i;
+			gcLeft.gridx = 1;
+			radioButton = new JRadioButton();
+			leftPanel.add(radioButton,gcLeft);
+			gcLeft.gridx = 2;
+			label = new JLabel("Player " + comboLabels[i] + " ");
+			//label = new JLabel("Player " + comboLabels[i] + " " + Player.pArray.get(i).getHp());
+			leftPanel.add(label,gcLeft);
+		}
+		
+		////top panel building////
+		gcTop.anchor= GridBagConstraints.LINE_END;
+		topPanel.add(playerNumber, gcTop);
+		
 		frame.getContentPane().add(leftPanel, BorderLayout.WEST);
+		frame.getContentPane().add(topPanel, BorderLayout.NORTH);
+	
 		frame.setSize(300, 300);
 		frame.setVisible(true);
 	}
