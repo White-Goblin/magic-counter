@@ -9,7 +9,11 @@ public class Player {
 	private boolean alive = true;
 	private String name = "";
 	
-	public void buildPlayerArray (int i) {
+	public Player() {
+		Player.pArray.add(this);
+	}
+	
+	public static void changePlayerCount (int i) {
 		if (i<Player.pArray.size()) {
 			while (i<Player.pArray.size()) {
 				Player.pArray.remove(i);
@@ -20,6 +24,7 @@ public class Player {
 				Player.pArray.add(new Player());
 			}
 		}
+		System.out.println("Resized player count to: " + Player.pArray.toString());
 	}
 	
 	public int getHp() {

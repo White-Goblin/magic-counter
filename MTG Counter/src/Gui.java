@@ -5,6 +5,7 @@ import java.awt.event.*;
 public class Gui {
 	////variables////
 	String[] comboLabels = {"1","2","3","4","5","6","7","8"};
+	//int[] comboLabels = {1,2,3,4,5,6,7,8};
 	String[] buttonLabels = {"+5","+1","-1","-5"};
 	
 	JFrame frame = new JFrame("MTG Counter");
@@ -14,11 +15,12 @@ public class Gui {
 	GridBagConstraints gcTop = new GridBagConstraints();
 	JComboBox playerNumber= new JComboBox(comboLabels);
 	JRadioButton radioButton;
+	ButtonGroup radioGroup = new ButtonGroup ();
 	JButton button;
 	JLabel label;
 	
 	public void build() {
-		System.out.println("building");
+		//System.out.println("building");
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		////left panel building////
@@ -28,6 +30,9 @@ public class Gui {
 			leftPanel.add(button, gcLeft);
 		}
 		
+		playerNumber.addActionListener(new ComboActionListener());
+		rebuildButtons();
+		/*
 		for (int i=0; i<8; i++) {
 			gcLeft.gridy = i;
 			gcLeft.gridx = 1;
@@ -37,10 +42,14 @@ public class Gui {
 			label = new JLabel("Player " + comboLabels[i] + " ");
 			//label = new JLabel("Player " + comboLabels[i] + " " + Player.pArray.get(i).getHp());
 			leftPanel.add(label,gcLeft);
-		}
+		} */
+		
+		////bottom panel building////
+		button = new JButton("Print Player Classes");
+		frame.getContentPane().add(button, BorderLayout.SOUTH);
 		
 		////top panel building////
-		gcTop.anchor= GridBagConstraints.LINE_END;
+		gcTop.anchor= GridBagConstraints.EAST;
 		topPanel.add(playerNumber, gcTop);
 		
 		frame.getContentPane().add(leftPanel, BorderLayout.WEST);
@@ -50,10 +59,27 @@ public class Gui {
 		frame.setVisible(true);
 	}
 	
+	private void rebuildButtons () {
+		for (int i=0; i<Player.pArray.size(); i++) {
+		gcLeft.gridy = i;
+		gcLeft.gridx = 1;
+		radioButton = new JRadioButton();
+		leftPanel.add(radioButton,gcLeft);
+		gcLeft.gridx = 2;
+		label = new JLabel("Player " + comboLabels[i] + " ");
+		//label = new JLabel("Player " + comboLabels[i] + " " + Player.pArray.get(i).getHp());
+		leftPanel.add(label,gcLeft);
+		}
+	}
+	
 	private class ComboActionListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("ComboActionListener action event");
+			JComboBox combo = (JComboBox)e.getSource();
+			int selectedNumber = Integer.parseInt((String)combo.getSelectedItem());
+			Player.changePlayerCount(selectedNumber);
+			rebuildButtons();
 		}
 	}
 	
