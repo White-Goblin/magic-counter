@@ -5,9 +5,7 @@ public class MTGCounter {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		MTGCounter game = new MTGCounter ();
-		for (int i = 0; i < STARTING_PLAYER_COUNT; i++) {
-			new Player();
-		}
+		Player.changePlayerCount(STARTING_PLAYER_COUNT);
 		game.go();
 	}
 	

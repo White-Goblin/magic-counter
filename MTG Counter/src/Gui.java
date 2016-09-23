@@ -1,12 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Gui {
 	////variables////
 	String[] comboLabels = {"1","2","3","4","5","6","7","8"};
 	//int[] comboLabels = {1,2,3,4,5,6,7,8};
 	String[] buttonLabels = {"+5","+1","-1","-5"};
+	static ArrayList<JRadioButton> bArray = new ArrayList<JRadioButton>();
+	static ArrayList<JLabel> lArray = new ArrayList<JLabel>();
+	static ArrayList<ButtonGroup> gArray = new ArrayList<ButtonGroup>();
 	
 	JFrame frame = new JFrame("MTG Counter");
 	JPanel leftPanel = new JPanel(new GridBagLayout());
@@ -14,8 +18,8 @@ public class Gui {
 	GridBagConstraints gcLeft = new GridBagConstraints();
 	GridBagConstraints gcTop = new GridBagConstraints();
 	JComboBox playerNumber= new JComboBox(comboLabels);
-	JRadioButton radioButton;
 	ButtonGroup radioGroup = new ButtonGroup ();
+	JRadioButton radioButton;
 	JButton button;
 	JLabel label;
 	
@@ -32,24 +36,16 @@ public class Gui {
 		
 		playerNumber.addActionListener(new ComboActionListener());
 		rebuildButtons();
-		/*
-		for (int i=0; i<8; i++) {
-			gcLeft.gridy = i;
-			gcLeft.gridx = 1;
-			radioButton = new JRadioButton();
-			leftPanel.add(radioButton,gcLeft);
-			gcLeft.gridx = 2;
-			label = new JLabel("Player " + comboLabels[i] + " ");
-			//label = new JLabel("Player " + comboLabels[i] + " " + Player.pArray.get(i).getHp());
-			leftPanel.add(label,gcLeft);
-		} */
-		
-		////bottom panel building////
-		button = new JButton("Print Player Classes");
-		frame.getContentPane().add(button, BorderLayout.SOUTH);
 		
 		////top panel building////
+		gcTop.weightx = 1;
+		gcTop.anchor= GridBagConstraints.WEST;
+		gcTop.gridx = 0;
+		button = new JButton("Reset");
+		topPanel.add(button, gcTop);
+		
 		gcTop.anchor= GridBagConstraints.EAST;
+		gcTop.gridx = 1;
 		topPanel.add(playerNumber, gcTop);
 		
 		frame.getContentPane().add(leftPanel, BorderLayout.WEST);
@@ -60,16 +56,34 @@ public class Gui {
 	}
 	
 	private void rebuildButtons () {
+		try {
+			for (int i = 0;i<bArray.size();i++) {
+				leftPanel.remove(bArray.get(i));
+				leftPanel.remove(lArray.get(i));
+				//radioGroup.remove(gArray.get(i));
+			}
+		} catch (IndexOutOfBoundsException e) {
+			 System.err.println("IndexOutOfBoundsException: " + e.getMessage());
+		}
+		
 		for (int i=0; i<Player.pArray.size(); i++) {
 		gcLeft.gridy = i;
 		gcLeft.gridx = 1;
 		radioButton = new JRadioButton();
-		leftPanel.add(radioButton,gcLeft);
+		radioGroup.add(button);
+		bArray.add(radioButton);
+		leftPanel.add(bArray.get(i),gcLeft);
+		
 		gcLeft.gridx = 2;
-		label = new JLabel("Player " + comboLabels[i] + " ");
+		label = new JLabel("Player " + comboLabels[i] + ": " + Player.pArray.get(i).getHp());
+		lArray.add(label);
+		leftPanel.add(lArray.get(i),gcLeft);
+		
 		//label = new JLabel("Player " + comboLabels[i] + " " + Player.pArray.get(i).getHp());
-		leftPanel.add(label,gcLeft);
+		//leftPanel.add(label,gcLeft);
 		}
+		frame.revalidate();
+		frame.repaint();
 	}
 	
 	private class ComboActionListener implements ActionListener {
