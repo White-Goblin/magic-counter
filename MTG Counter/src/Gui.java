@@ -65,25 +65,27 @@ public class Gui {
 		} catch (IndexOutOfBoundsException e) {
 			 System.err.println("IndexOutOfBoundsException: " + e.getMessage());
 		}
+		bArray.clear();
+		lArray.clear();
 		
 		for (int i=0; i<Player.pArray.size(); i++) {
 		gcLeft.gridy = i;
 		gcLeft.gridx = 1;
 		radioButton = new JRadioButton();
-		radioGroup.add(button);
+		radioGroup.add(radioButton);
 		bArray.add(radioButton);
 		leftPanel.add(bArray.get(i),gcLeft);
 		
 		gcLeft.gridx = 2;
-		label = new JLabel("Player " + comboLabels[i] + ": " + Player.pArray.get(i).getHp());
+		label = new JLabel();
+		label.setText("Player " + (i+1) + ": " + Player.pArray.get(i).getHp());
 		lArray.add(label);
 		leftPanel.add(lArray.get(i),gcLeft);
 		
-		//label = new JLabel("Player " + comboLabels[i] + " " + Player.pArray.get(i).getHp());
-		//leftPanel.add(label,gcLeft);
+		leftPanel.add(label,gcLeft);
 		}
-		frame.revalidate();
 		frame.repaint();
+		frame.revalidate();
 	}
 	
 	private class ComboActionListener implements ActionListener {
