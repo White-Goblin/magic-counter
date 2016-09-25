@@ -20,7 +20,6 @@ public class Player {
 				pArray.add(new Player());
 			}
 		}
-		System.out.println("Resized player count to: " + pArray.toString());
 	}
 	
 	public int getHp() {

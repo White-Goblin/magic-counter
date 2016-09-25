@@ -12,7 +12,6 @@ public class MTGCounter {
 	private void go() {
 		////initialize GUI builder////
 		Gui gui = new Gui();
-		
 		gui.build();
 	}
 	
