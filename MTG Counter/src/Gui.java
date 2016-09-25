@@ -29,15 +29,15 @@ public class Gui extends JFrame {
 			button.addActionListener(new ButtonActionListener());
 			addComp(leftPanel, button, gcLeft, 0, i, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
 		}
-		
-		playerNumber.addActionListener(new ComboActionListener());
-		rebuildButtons();
-		
+				
 		////top panel building////
 		button = new JButton("Reset");
 		button.addActionListener(new ClearButtonActionListener());
 		addComp(topPanel, button, gcTop, 0, 0, 1, 1, GridBagConstraints.WEST, GridBagConstraints.WEST);
 		addComp(topPanel, playerNumber, gcTop, 1, 0, 1, 1, GridBagConstraints.EAST, GridBagConstraints.EAST);
+		
+		playerNumber.addActionListener(new ComboActionListener());
+		rebuildButtons();
 		
 		this.getContentPane().add(leftPanel, BorderLayout.WEST);
 		this.getContentPane().add(topPanel, BorderLayout.NORTH);
